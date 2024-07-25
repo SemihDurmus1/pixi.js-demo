@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://pixijs.download/release/pixi.js"></script>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BAŞLAYALIMMMMMM</title>
+    </head>
+    
+    <body>
+        <script type="module">
+            const app = new PIXI.Application();
+            await app.init({ width: 640, height: 360 })
+            document.body.appendChild(app.canvas);
+
+            await PIXI.Assets.load('player.png');
+            let sprite = PIXI.Sprite.from('player.png');
+            
+            //sprite.anchor.set(0.5);
+            
+            sprite.x = app.view.width / 2;
+            sprite.y = app.view.height / 2;
+
+
+
+            app.stage.addChild(sprite);//App stage is the pixi's container
+
+            //Add a variable to count up the seconds our demo has been running
+            let elapsed = 0.0;
+            //Tell our application's ticker to run a new callback every frame, passing
+            //in the amount of time that has passed since the Last tick
+            app.ticker.add((ticker) =>{ 
+                //Add the time to our total elapsed time
+                elapsed += ticker.deltaTime;
+                //Update the sprite's X position based on the cosine of our elapsed time. We divide by 50 to slow the animation down a bit...
+                sprite.x = 100.0 + Math.cos(elapsed/50.0) * 100.0;
+                
+                //sprite.rotation += 0.01 * deltaTime; 
+            });
+
+          </script>
+    </body>
+</html>

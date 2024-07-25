@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://pixijs.download/release/pixi.js"></script>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BAŞLAYALIMMMMMM</title>
+    </head>
+    
+    <body>
+        <script type="module">
+            const app = new PIXI.Application();
+            await app.init({ width: 1280, height: 640 })
+            document.body.appendChild(app.canvas);
+
+            const container = new PIXI.Container({
+                x:app.screen.width / 2,
+                y:app.screen.height / 2,
+            });
+
+            app.stage.addChild(container);
+
+            await PIXI.Assets.load('player.png');
+            
+            const sprites = [];
+            let parent = container;
+            for(let i = 0; i < 3; i++){
+                
+                let wrapper = new PIXI.Container();
+                let sprite = PIXI.Sprite.from('player.png');
+
+                sprite.anchor.set(0.5);
+
+                wrapper.addChild(sprite);
+                parent.addChild(wrapper);
+
+                sprites.push(wrapper);
+
+                parent = wrapper;
+            }
+            
+            // Set all sprite's properties to the same value, animated over time
+            let elapsed = 0.0;
+            
+            app.ticker.add((delta) => {
+                
+                elapsed += delta.deltaTime / 60;
+                
+                const amount = Math.sin(elapsed);
+                const scale = 1.0 + 0.25 * amount;
+                const alpha = 0.75 + 0.25 * amount;
+                const angle = 40 * amount;
+                const x = 75 * amount;
+            for (let i = 0; i < sprites.length; i++) {
+                const sprite = sprites[i];
+                sprite.scale.set(scale);
+                sprite.alpha = alpha;
+                sprite.angle = angle;
+                sprite.x = x;
+            }
+            });
+                        
+          </script>
+    </body>
+</html>
